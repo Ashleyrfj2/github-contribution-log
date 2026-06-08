@@ -2,16 +2,16 @@
 
 # Contribution [#]: [Issue Title]
 
-**Contribution Number:** [1 / 2 / 3]  
-**Student:** [Your Name]  
-**Issue:** [GitHub issue link]  
-**Status:** [Phase I / Phase II / Phase III / Phase IV] [In Progress / Complete]
+**Contribution Number:** 1  
+**Student:** Ashley Jackson  
+**Issue:** [[GitHub issue link] ](https://github.com/meshtastic/firmware/issues/10517) 
+**Status:** Phase I
 
 ---
 
 ## Why I Chose This Issue
 
-[1-2 paragraphs explaining why this issue interests you, how it matches your skills/learning goals, what you hope to learn]
+I am almost finished with the MVP for an app I am creating. My stretch goal includes incorporating meshtastic into the application. This issue gives me a good entry level issue into the code so I can become familiar with it over time.
 
 ---
 
@@ -19,19 +19,19 @@
 
 ### Problem Description
 
-[In your own words, what's broken or missing?]
+Firmware update has caused issues with the LED light on the ThinkNode M1
 
 ### Expected Behavior
 
-[What should happen?]
+The light is not supposed to remain on past the intial start up
 
 ### Current Behavior
 
-[What actually happens?]
+The light remains on
 
 ### Affected Components
 
-[Which parts of the codebase are involved?]
+
 
 ---
 
