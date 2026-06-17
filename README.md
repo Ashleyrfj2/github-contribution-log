@@ -52,7 +52,7 @@ I had to build the firmware locally and then select the project (Hardware) I was
 
 ### Reproduction Evidence
 
-- **Commit showing reproduction:** [Link to commit in your fork]
+- **Commit showing reproduction:** https://github.com/meshtastic/meshTestic/compare/master...Ashleyrfj2:meshTestic:A301?expand=1
 - **Screenshots/logs:** [If applicable]
 - **My findings:** The issue can be reproduced after I updated my device to the newest firmware. Previously, I could turn the LED light off with the knob on the device.
 - <img width="1920" height="1080" alt="Screenshot 2026-06-16 at 9 42 42 PM" src="https://github.com/user-attachments/assets/476eef18-f8ac-4483-865c-5e613bdf7207" />
@@ -78,6 +78,7 @@ runtime and charge status is StatusLEDModule.cpp
 ### Proposed Solution
 
 [High-level description of your fix approach]
+The firmware is force starting the LED light to turn on and can not be disabled. Adding an option to disable force start of the LED upon boot  
 
 ### Implementation Plan
 
@@ -93,11 +94,14 @@ Syncing changes to the blacklight to change with the LED light would be a stretc
 2. LED_Notification in StatusLEDModule.cpp, allow surpression of charge and pairing status lights.
 
 
-**Implement:** [Link to your branch/commits as you work]
+**Implement:** [[Link to your branch/commits as you work]]
+(https://github.com/Ashleyrfj2/mesh_firmware)
 
 **Review:** [Self-review checklist - does it follow the project's contribution guidelines?]
+Yes, there are very few guidelines.
 
 **Evaluate:** [How will you verify it works?]
+- I will flash the firmware that I make changes to onto my own device. I will be able to flash it back if there are any issues.
 
 ---
 
