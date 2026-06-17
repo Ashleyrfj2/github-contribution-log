@@ -27,10 +27,10 @@ The light is not supposed to remain on past the intial start up
 
 ### Current Behavior
 
-The light remains on
+The light remains on persistently after users upgrade firmware to the newest version
 
 ### Affected Components
-
+EInkDisplay2.cpp has comments about the hardware backlight and it automatically starting enabled
 
 
 ---
@@ -40,18 +40,22 @@ The light remains on
 ### Environment Setup
 
 [Notes on setting up your local development environment - challenges you faced, how you solved them]
+This is brand new for me, I am working on firmware and having to reproduce the issue physically and not in the code. The README provided gave really good guidance. I had to install an additional IDE inside of VSCode. It is called Platform IDE. I did some quick research and apparently PlayformIO IDE is used for meshtastic because it is extremely complex and has over 1000 different development boards. Using PlatformIO supports a large amount of platforms used in the Meshtastic ecosystem and the 1000+ development boards. 
+I had to do setup within VSCode that still seems a bit foreign to me. The README directed me to: https://meshtastic.org/docs/development/firmware/build/
+I had to build the firmware locally and then select the project (Hardware) I was working with. 
+
 
 ### Steps to Reproduce
 
-1. [Step 1]
-2. [Step 2]
-3. [Observed result]
+1. This is a physical issue with the firmware that is found on an electric device. The light remains on, when previously the led status light could be turned off
+
 
 ### Reproduction Evidence
 
 - **Commit showing reproduction:** [Link to commit in your fork]
 - **Screenshots/logs:** [If applicable]
-- **My findings:** [What you discovered during reproduction]
+- **My findings:** The issue can be reproduced after I updated my device to the newest firmware. Previously, I could turn the LED light off with the knob on the device.
+- <img width="1920" height="1080" alt="Screenshot 2026-06-16 at 9 42 42 PM" src="https://github.com/user-attachments/assets/476eef18-f8ac-4483-865c-5e613bdf7207" />
 
 ---
 
@@ -60,6 +64,16 @@ The light remains on
 ### Analysis
 
 [Your analysis of the root cause - what's causing the issue?]
+nicheGraphics.h is where a lot of the visual aspects of the devide are defined. Such as font size and font family, applets, what happens with the backlight when clicking specific buttons. This directly connects to LatchingBacklight.h which includes Observer.h and covers backlight. 
+
+#elif defined(ELECROW_ThinkNode_M1)
+#define HW_VENDOR meshtastic_HardwareModel_THINKNODE_M1
+
+StatusLEDModule.cpp is directly for the status light that is mentioned in the issue. It covers the LED power for the status lights on the device. This is where the issue would be solved, the backlight modules would be additional to the issue but proves beneficial. 
+board pin = variant.h
+boot LED init = main.cpp
+runtime and charge status is StatusLEDModule.cpp
+
 
 ### Proposed Solution
 
@@ -67,16 +81,17 @@ The light remains on
 
 ### Implementation Plan
 
-Using UMPIRE framework (adapted):
-
 **Understand:** [Restate the problem]
+The newest firmware for Meshtastic forced the status led on the ThinkNode M1 to stay on after booting up. 
 
 **Match:** [What similar patterns/solutions exist in the codebase?]
+Syncing changes to the blacklight to change with the LED light would be a stretch goal but prove beneficial. 
 
 **Plan:** [Step-by-step implementation plan]
-1. [Modify file X to do Y]
-2. [Add function Z]
-3. [Update tests]
+1. main.cpp forces the led on on bootup for the specific device. Current set up is a heartbeat status. 
+   In main.cpp, LED_POWER is being forced on early boot. Removing this or adding a setting that allows user to set a preference on boot.
+2. LED_Notification in StatusLEDModule.cpp, allow surpression of charge and pairing status lights.
+
 
 **Implement:** [Link to your branch/commits as you work]
 
